@@ -12,6 +12,7 @@ except ImportError:
     # Python 2
     import __builtin__ as builtins
 
+
 def sorted(strings):
     return builtins.sorted(strings, key=key)
 
@@ -70,6 +71,7 @@ PRIMARY_ALPHABET.update((n, '~+-+3') for n in '*')
 PRIMARY_ALPHABET.update((n, '~+-+4') for n in '#')
 PRIMARY_ALPHABET.update((n, '~+~!1') for n in '~')
 PRIMARY_ALPHABET.update((n, '~+~!2') for n in '≈')
+
 
 def primary_alphabet_letter_re(l):
     if l == 'c':

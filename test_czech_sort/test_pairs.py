@@ -2,8 +2,6 @@
 
 from __future__ import unicode_literals
 
-import sys
-
 from czech_sort import key
 
 inputs = (
@@ -65,4 +63,3 @@ def test_pair(a, b):
         assert not ka >= kb
         assert ka < kb
         assert ka != kb
-
