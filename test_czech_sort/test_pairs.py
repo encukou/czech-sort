@@ -31,6 +31,11 @@ inputs = (
     # XXX: 'C Ç °C X Xⁿ Xₑ Xⁿₑ'.split(),
     'ZZ Z-2 Ž 3 3N 3no 5A 8'.split(),
     # XXX: Symbols
+
+    # Others
+    ['cyp', 'čáp', 'čupřina'],
+    ['Cyp', 'Čáp', 'Čupřina'],
+    ['CYP', 'ČÁP', 'ČUPŘINA'],
 )
 
 
