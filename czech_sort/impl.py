@@ -3,7 +3,6 @@ import builtins
 import functools
 import unicodedata
 
-__all__ = ['sorted', 'key']
 
 def sorted(strings):
     return builtins.sorted(strings, key=key)
