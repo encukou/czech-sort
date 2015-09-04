@@ -16,11 +16,11 @@ def sorted(strings):
     return builtins.sorted(strings, key=key)
 
 
-nkfd = functools.partial(unicodedata.normalize, 'NFKD')
-HACEK = nkfd('č')[-1]
+nfkd = functools.partial(unicodedata.normalize, 'NFKD')
+HACEK = nfkd('č')[-1]
 
 
-PRIMARY_ALPHABET = dict((nkfd(l), a) for l, a in {
+PRIMARY_ALPHABET = dict((nfkd(l), a) for l, a in {
         ' ': ' ',
         '-': ' ',
         '\N{NO-BREAK SPACE}': ' ',
@@ -71,7 +71,6 @@ PRIMARY_ALPHABET.update((n, '~+-+4') for n in '#')
 PRIMARY_ALPHABET.update((n, '~+~!1') for n in '~')
 PRIMARY_ALPHABET.update((n, '~+~!2') for n in '≈')
 
-
 def primary_alphabet_letter_re(l):
     if l == 'c':
         return 'c(?:(?!h)|$)'
@@ -84,11 +83,15 @@ def primary_alphabet_letter_re(l):
 PRIMARY_RE = re.compile('|'.join(primary_alphabet_letter_re(l)
                                  for l in PRIMARY_ALPHABET))
 
+SECONDARY = dict((nfkd(c)[-1:], '~' + str(i).zfill(3)) for i, c
+                 in enumerate('ȧ á ā à â ǎ ã ă ȃ ą å ä a̋ ȁ'.split()))
+
 
 def key(string):
     string = re.sub('-(?=\d)', '\N{MINUS SIGN}', string)
     lowercased = string.lower()
-    normal = nkfd(lowercased)
+    normal = nfkd(lowercased)
     primary = tuple(PRIMARY_ALPHABET[l] for l in PRIMARY_RE.findall(normal))
+    secondary = tuple(SECONDARY.get(c, c) for c in normal)
     is_upper = tuple(c == c.upper() for c in string)
-    return primary, normal, is_upper, string
+    return primary, secondary, normal, is_upper, string

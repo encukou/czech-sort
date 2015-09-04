@@ -17,7 +17,7 @@ inputs = (
     ['padá', 'sál', 'sála', 'sálá', 'säla', 'satira', 'si lehá', 'si nese',
      'sílí', 'šála', 'šat', 'ta'],
 
-    # XXX: 'ȧ á ā á à â ǎ ã ă ȃ ą å ä a̋ ȁ'.split(),
+    'ȧ á ā à â ǎ ã ă ȃ ą å ä a̋ ȁ'.split(),
 
     # Examples from ÚJČ AV ČR:
     # http://prirucka.ujc.cas.cz/?action=view&id=900
@@ -34,6 +34,7 @@ inputs = (
     'ZZ Z-2 Ž 3 3N 3no 5A 8'.split(),
     # XXX: Symbols
 )
+
 
 def get_pairs(inputs):
     for input in inputs:
