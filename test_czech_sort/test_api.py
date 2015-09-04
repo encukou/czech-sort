@@ -1,16 +1,18 @@
+# For Python 2, we need to declare the encoding: UTF-8, of course.
+
 import pytest
 
 import czech_sort
 
 
 def test_sorted():
-    result = czech_sort.sorted(['sídliště', 'shoda', 'schody'])
-    assert result == ['shoda', 'schody', 'sídliště']
+    result = czech_sort.sorted([u'sídliště', u'shoda', u'schody'])
+    assert result == [u'shoda', u'schody', u'sídliště']
 
 
 def test_key():
-    result = sorted(['sídliště', 'shoda', 'schody'], key=czech_sort.key)
-    assert result == ['shoda', 'schody', 'sídliště']
+    result = sorted([u'sídliště', u'shoda', u'schody'], key=czech_sort.key)
+    assert result == [u'shoda', u'schody', u'sídliště']
 
 
 def test_error_bytes():

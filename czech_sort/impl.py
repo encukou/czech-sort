@@ -1,8 +1,16 @@
+# For Python 2, we need to declare the encoding: UTF-8, of course.
+
+from __future__ import unicode_literals
+
 import re
-import builtins
 import functools
 import unicodedata
 
+try:
+    import builtins
+except ImportError:
+    # Python 2
+    import __builtin__ as builtins
 
 def sorted(strings):
     return builtins.sorted(strings, key=key)

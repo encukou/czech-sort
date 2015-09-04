@@ -1,5 +1,9 @@
 # For Python 2, we need to declare the encoding: UTF-8, of course.
 
+from __future__ import unicode_literals
+
+import sys
+
 from czech_sort import key
 
 inputs = (
