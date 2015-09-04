@@ -20,7 +20,7 @@ nkfd = functools.partial(unicodedata.normalize, 'NFKD')
 HACEK = nkfd('č')[-1]
 
 
-PRIMARY_ALPHABET = {nkfd(l): a for l, a in {
+PRIMARY_ALPHABET = dict((nkfd(l), a) for l, a in {
         ' ': ' ',
         '-': ' ',
         '\N{NO-BREAK SPACE}': ' ',
@@ -57,7 +57,7 @@ PRIMARY_ALPHABET = {nkfd(l): a for l, a in {
         'ž': 'zx',
         "'": '|:',
         '\N{MINUS SIGN}': '|-',
-    }.items()}
+    }.items())
 
 PRIMARY_ALPHABET.update((str(n), '|' + str(n)) for n in range(10))
 PRIMARY_ALPHABET.update((n, '~!') for n in '.,;?!:„“”‘’””«»"\'`「」–|\\()/[]()‹›{}<>')
@@ -76,7 +76,7 @@ def primary_alphabet_letter_re(l):
     if l == 'c':
         return 'c(?:(?!h)|$)'
     if l + HACEK in PRIMARY_ALPHABET:
-        return '{}(?:(?!{})|$)'.format(l, HACEK)
+        return '{0}(?:(?!{1})|$)'.format(l, HACEK)
     else:
         return re.escape(l)
 
