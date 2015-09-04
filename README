@@ -102,7 +102,7 @@ Patches are also welcome! Source code is hosted at Github::
 To run the included tests::
 
     $ pip install pytest
-    $ py.test
+    $ python -m pytest
 
 If you would like to contribute, but are confused by the above,
 then please e-mail encukou ``at`` gmail ``dot`` com.
