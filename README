@@ -1,7 +1,7 @@
 Czech Sort
 ==========
 
-This is a pure-Python library Czech-language albhabetical sorting.
+This is a pure-Python library for Czech-language albhabetical sorting.
 
 
 Quick Use
@@ -61,13 +61,16 @@ have access to the standard, which makes finding such bugs somewhat difficult.
 Full API
 ---------
 
-czech_sort.*sorted*(iterable)
+czech_sort.sorted(iterable)
 
     Takes an iterable of strings, and returns a list of them, sorted.
 
-czech_sort.*key*(s)
+czech_sort.key(s)
 
     Returns a sort key object for a given string.
+
+    This function is suitable as the ``key`` for functions like the built-in
+    ``sorted`` or ``list.sort``.
 
 
 Compatibility
