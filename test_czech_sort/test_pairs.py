@@ -3,13 +3,32 @@
 from czech_sort import key
 
 inputs = (
-    # Two examples from Wikipedia:
+    # Examples from Wikipedia:
     # https://cs.wikipedia.org/wiki/Abecedn%C3%AD_%C5%99azen%C3%AD
-    'A B C Č D E F G H Ch I J K L M N O P Q R Ř S Š T U V W X Y Z Ž'.split(),
+    [' '] + '-'.split() +
+     'A B C Č D E F G H Ch I J K L M N O P Q R Ř S Š T U V W X Y Z Ž'.split() +
+     '0 1 2 3 4 5 6 7 8 9 \''.split() +
+     [],
+
     ['padá', 'sál', 'sála', 'sálá', 'säla', 'satira', 'si lehá', 'si nese',
      'sílí', 'šála', 'šat', 'ta'],
 
-    # Two examples from 
+    # XXX: 'ȧ á ā á à â ǎ ã ă ȃ ą å ä a̋ ȁ'.split(),
+
+    # Examples from ÚJČ AV ČR:
+    # http://prirucka.ujc.cas.cz/?action=view&id=900
+    ['shoda', 'schody', 'sídliště'],
+    ['motýl noční', 'motýlek'],
+    ['damašek', 'Damašek'],
+    ['da capo', 'ďábel', 'dabing', 'ucho', 'úchop', 'uchopit'],
+    ['kanon', 'kanón', 'kaňon', 'kánon'],
+    'á ď é ě í ň ó ť ú ů ý'.split(),
+    # XXX (misplaced ł): 'à â ä ç è ê ĺ ľ ł ô ö ŕ ü ż'.split(),
+    'à â ä ç è ê ĺ ľ ô ö ŕ ü ż'.split(),
+    'C Ç °C'.split(),
+    # XXX: 'C Ç °C X Xⁿ Xₑ Xⁿₑ'.split(),
+    'ZZ Z-2 Ž 3 3N 3no 5A 8'.split(),
+    # XXX: Symbols
 )
 
 def get_pairs(inputs):
