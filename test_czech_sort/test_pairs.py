@@ -33,9 +33,8 @@ inputs = (
     # XXX: Symbols
 
     # Others
-    ['cyp', 'čáp', 'čupřina'],
-    ['Cyp', 'Čáp', 'Čupřina'],
-    ['CYP', 'ČÁP', 'ČUPŘINA'],
+    ['cyp', 'Cyp', 'CYP', 'čáp', 'Čáp', 'ČÁP', 'čupřina', 'Čupřina', 'ČUPŘINA'],
+    ['mac', 'mác', 'mah', 'máh', 'mach', 'mách', 'máchl', 'moh'],
 )
 
 

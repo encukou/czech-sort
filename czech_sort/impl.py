@@ -75,7 +75,7 @@ PRIMARY_ALPHABET.update((n, '~+~!2') for n in '≈')
 
 def primary_alphabet_letter_re(l):
     if l == 'c':
-        return 'c(?:(?![h{0}])|$)'.format(l, HACEK)
+        return '{0}(?:(?![h{1}])|$)'.format(l, HACEK)
     if l + HACEK in PRIMARY_ALPHABET:
         return '{0}(?:(?!{1})|$)'.format(l, HACEK)
     else:
