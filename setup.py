@@ -23,7 +23,7 @@ with io.open('README', encoding='utf-8') as f:
 
 setup_args = dict(
     name='czech-sort',
-    version='0.1',
+    version='0.2',
     packages=['czech_sort'],
 
     description="""Text sorting function for the Czech language""",
