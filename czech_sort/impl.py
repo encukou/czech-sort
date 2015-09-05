@@ -52,7 +52,6 @@ def key(string):
     skip = 0
     normal = nfkd(string).rstrip()
     diacritics = []
-    unknown_diacritic = (POS_UNKNOWN, SH_UNKNOWN)
     for i, char in enumerate(normal):
         if skip > 0:
             skip -= 1
@@ -77,11 +76,10 @@ def key(string):
                     break
                 elif next in DIACRITICS_MAP:
                     skip += 1
-                    diacritics.extend(
-                        DIACRITICS_MAP.get(next, [unknown_diacritic]))
+                    diacritics.extend(DIACRITICS_MAP[next])
                 elif unicodedata.category(char)[0] == 'M':
                     skip += 1
-                    diacritics.append(unknown_diacritic)
+                    diacritics.append((POS_UNKNOWN, SH_UNKNOWN))
                 else:
                     break
             add_alphabet((1, char_lower))
