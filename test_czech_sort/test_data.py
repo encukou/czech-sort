@@ -13,6 +13,7 @@ inputs = (
      'A B C Č D E F G H Ch I J K L M N O P Q R Ř S Š T U V W X Y Z Ž'.split() +
      '0 1 2 3 4 5 6 7 8 9'.split() +
      [],
+    'a á b c č d ď e é ě f g h ch i í j k l m n ň o ó p q r ř s š t ť u ú ů v w x y ý z ž'.split(),
 
     ['padá', 'sál', 'sála', 'sálá', 'säla', 'satira', 'si lehá', 'si nese',
      'sílí', 'šála', 'šat', 'ta'],
@@ -34,7 +35,7 @@ inputs = (
 
     # Others
     ['cyp', 'Cyp', 'CYP', 'čáp', 'Čáp', 'ČÁP', 'čupřina', 'Čupřina', 'ČUPŘINA'],
-    ['goa uld', 'goa xyz', 'goa-uld', 'goauld', 'goàuld', "goa'uld"],
+    ['goa uld', 'goa xyz', 'goa-uld', 'goauld', 'goàuld', "goa'uld", 'goa-xyz'],
     ['mac', 'mác', 'mah', 'máh', 'mach', 'mách', 'máchl', 'moh'],
     "ȧ á ā à â ǎ ã ă ȃ å ä a̋ ȁ ą a' °a".split(),
     ['', ' ', '-', "'"],
