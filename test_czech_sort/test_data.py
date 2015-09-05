@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from czech_sort import key
+import czech_sort
 
 inputs = (
     # Examples from Wikipedia:
@@ -41,34 +41,31 @@ inputs = (
 )
 
 
-def get_pairs(inputs):
-    for input in inputs:
-        for i, first in enumerate(input):
-            for second in input[i+1:]:
-                yield first, second
-
-
 def pytest_generate_tests(metafunc):
-    if metafunc.function.__name__ == 'test_pair':
+    if metafunc.function.__name__ == 'test_sorted':
         metafunc.parametrize(
-            ['a', 'b'],
-            list(get_pairs(inputs)))
+            'l', [list(l) for l in inputs])
+    if metafunc.function.__name__ == 'test_key':
+        metafunc.parametrize(
+            's', [c for l in inputs for c in l])
 
 
-def test_pair(a, b):
-    ka = key(a)
-    kb = key(b)
-    print(ka)
-    print(kb)
-    assert ka <= kb
-    assert not ka > kb
-    if a == b:
-        assert ka == kb
-        assert ka >= kb
-        assert not ka < kb
-        assert not ka != kb
-    else:
-        assert not ka == kb
-        assert not ka >= kb
-        assert ka < kb
-        assert ka != kb
+def test_sorted(l):
+    result = czech_sort.sorted(reversed(l))
+    print('exp:', l)
+    print('got:', result)
+    assert l == result
+
+
+def test_key(s):
+    """Assert keys are immutable and well ordered"""
+    # Actually, this is a strict type check
+    key = czech_sort.key(s)
+    if type(s) is str:
+        return True
+    if type(s) is int:
+        return True
+    if type(s) is tuple:
+        for c in s:
+            test_key(s)
+    raise AssertionError('{0} is a {1}'.format(s, type(s)))
