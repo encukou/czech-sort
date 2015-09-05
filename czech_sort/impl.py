@@ -197,7 +197,7 @@ DECOMPOSING_EXTRAS = {
 
 
 PUNCTUATION_MAP = {}
-# Punctuation key for a letter is (0) for non-punctuation.
+# Punctuation key is (0, ) for non-punctuation.
 # For punctuation, it can be:
 # Hyphen: (-1, )
 PUNCTUATION_MAP['-'] = (-1, )
