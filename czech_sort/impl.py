@@ -116,7 +116,7 @@ def key(string):
             add_punctuation((3, ))
         elif cat0 == 'N':
             # Number (Decimal digit, Letter, Other)
-            add_alphabet((2, unicodedata.numeric(char, 0)))
+            add_alphabet((2, int(unicodedata.numeric(char, 0)) * 100))
             add_diacritic(())
             add_case(False)
             add_punctuation((0, ))

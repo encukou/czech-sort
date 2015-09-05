@@ -64,13 +64,16 @@ def test_key(s):
     """Assert keys are immutable and well ordered"""
     # Actually, this is a strict type check
     key = czech_sort.key(s)
-    if type(s) is str:
+    check_key_element(key)
+
+
+def check_key_element(t):
+    if type(t) in (str, int, bool):
         return True
-    if type(s) is int:
+    if sys.version_info < (3, 0) and type(t) is unicode:
         return True
-    if sys.version_info < (3, 0) and type(s) is unicode:
-        return True
-    if type(s) is tuple:
-        for c in s:
-            test_key(s)
-    raise AssertionError('{0} is a {1}'.format(s, type(s)))
+    if type(t) is tuple:
+        for c in t:
+            check_key_element(c)
+        return
+    raise AssertionError('{0} is a {1}'.format(t, type(t)))
