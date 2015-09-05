@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals
 
+import sys
+
 import czech_sort
 
 inputs = (
@@ -64,6 +66,8 @@ def test_key(s):
     if type(s) is str:
         return True
     if type(s) is int:
+        return True
+    if sys.version_info < (3, 0) and type(s) is unicode:
         return True
     if type(s) is tuple:
         for c in s:
