@@ -1,5 +1,13 @@
 # For Python 2, we need to declare the encoding: UTF-8, of course.
 
+"""
+The ``czech_sort`` library provides utilities for quick-and-dirty string
+comparisons, using the Czech alphabetization rules.
+
+Future versions of this library may change the sort order, as more details
+and exotic characters are added.
+"""
+
 from __future__ import unicode_literals
 
 import re
@@ -14,6 +22,10 @@ except ImportError:
 
 
 def sorted(strings):
+    """Return a list of strings sorted using Czech collation
+
+    :param strings: iterable of strings (unicode in Python 2)
+    """
     return builtins.sorted(strings, key=key)
 
 
@@ -22,7 +34,22 @@ HACEK = nfkd('č')[-1]
 
 
 def key(string):
-    # The multi-level key:
+    """Return a Czech sort key for the given string
+
+    :param string: string (unicode in Python 2)
+
+    Comparing the sort keys of two strings will give the result according
+    to how the strings would compare in Czech collation order, i.e.
+        ``key(s1) < key(s2)``  <=>  ``s1`` comes before ``s2``
+
+    The structure of the sort key may change in the future.
+    The only operations guaranteed to work on it are comparisons and equality
+    checks (<, ==, etc.) against other keys.
+    """
+    # The multi-level key is a nested tuple containing strings and ints.
+    # The tuple contains sub-keys that roughly correspond to levels in
+    # UTS #10 (http://unicode.org/reports/tr10/). Except for fallback strings
+    # at the end, each contains a tuple of typically one key per element/letter.
     # - Alphabet:
     #    Separators (0, p, l, w)
     #       p: -no. of paragraph separators
@@ -31,19 +58,20 @@ def key(string):
     #    Letters (1, l); l is the base letter, lowercased
     #       Special letters: 'č' shows up as 'cx'; 'ř' as 'rx', etc.
     #                        the 'ch' digraph becomes 'hx'
-    #    Numbers (2, n); n is the numeric value
+    #    Numbers (2, n); n is int(numeric value * 100)
     #    Missing for non-letters
     # - Diacritics (p, n, s)
     #    p: position (above, below, behind, in front, in/over/around, unknown)
     #       (as a sorted tuple of indices)
     #    s: shape (dot, grave, breve, ..., unknown)
     #       (as a sorted tuple of indices)
-    #    Missing for non-letters
+    #    Missing for non-letters; empty if diacritics included in base (e.g. ř)
     # - Case: True for uppercased letters
     #    Missing for non-letters
     # - Punctuation: see PUNCTUATION_MAP below
     # - (fallback) NFKD-normalized string
     # - (fallback) original string
+
     subkeys = [], [], [], []
     add_alphabet = subkeys[0].append
     add_diacritic = subkeys[1].append
