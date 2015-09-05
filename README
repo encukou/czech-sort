@@ -100,7 +100,7 @@ __ http://github.com/encukou/czech-sort/issues/new
 
 Patches are also welcome! Source code is hosted at Github::
 
-    $ git clone github.com/encukou/czech-sort
+    $ git clone http://github.com/encukou/czech-sort
 
 To run the included tests::
 
