@@ -18,3 +18,6 @@ def test_key():
 def test_error_bytes():
     with pytest.raises(TypeError):
         czech_sort.sorted([b'a', b'b'])
+        
+
+

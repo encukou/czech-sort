@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import sys
 
 import czech_sort
+import pytest
 
 inputs = (
     # Examples from Wikipedia:
@@ -41,6 +42,7 @@ inputs = (
     ['', ' ', '-', "'"],
     ['è', 'ê', 'ề'],
     ['a\n b', 'a \nb', 'a\nb', 'a b', 'ab'],
+    ['Ļ', 'Ł', 'M', 'Ơ', 'Ø', 'P'] # this line is new
 )
 
 
@@ -77,3 +79,18 @@ def check_key_element(t):
             check_key_element(c)
         return
     raise AssertionError('{0} is a {1}'.format(t, type(t)))
+
+
+@pytest.mark.parametrize("l",('Ļ', 'Ł', 'M', 'Ơ', 'Ø', 'P'))
+def test_sorted_my(l):
+    result = czech_sort.sorted(reversed(l))
+    print('exp:', l)
+    print('got:', result[0])
+    assert l == result[0]
+
+@pytest.mark.parametrize("s",'ĻŁMƠØP')
+def test_key_my(s):
+    """Assert keys are immutable and well ordered"""
+    # Actually, this is a strict type check
+    key = czech_sort.key(s)
+    check_key_element(key)
