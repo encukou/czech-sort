@@ -92,7 +92,7 @@ def key(string):
             found = False
             if char_lower in DECOMPOSING_EXTRAS:
                 # stuff like Ł doesn't decompose in Unicode; do it manually
-                char_lower, _extra_diacritics = DECOMPOSING_EXTRAS[char]
+                char_lower, _extra_diacritics = DECOMPOSING_EXTRAS[char_lower]
                 diacritics.extend(_extra_diacritics)
             for next in normal[i+1:]:
                 if next == HACEK and char_lower in ('c', 'r', 's', 'z'):
