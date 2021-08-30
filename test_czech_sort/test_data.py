@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import sys
 
 import czech_sort
+import pytest
 
 inputs = (
     # Examples from Wikipedia:
@@ -41,6 +42,7 @@ inputs = (
     ['', ' ', '-', "'"],
     ['è', 'ê', 'ề'],
     ['a\n b', 'a \nb', 'a\nb', 'a b', 'ab'],
+    ['Ļ', 'Ł', 'M', 'Ơ', 'Ø', 'P'],
 )
 
 
