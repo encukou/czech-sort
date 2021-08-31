@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (2021-08-30)
+
+- Fix bug that prevented sorting strings that contain 'Ł' and/or 'Ø'.
+  (Thanks to @dark-light-cz for reporting and @jiri-one for the PR!)
+
 ## 1.0.0 (2020-09-14)
 
 No code changes.
