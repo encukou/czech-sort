@@ -4,8 +4,11 @@ from __future__ import unicode_literals
 
 import sys
 
+from hypothesis import given
+from hypothesis.strategies import text
+
 import czech_sort
-import pytest
+
 
 inputs = (
     # Examples from Wikipedia:
@@ -79,3 +82,14 @@ def check_key_element(t):
             check_key_element(c)
         return
     raise AssertionError('{0} is a {1}'.format(t, type(t)))
+
+@given(random_string=text())
+def test_sorted_hypothesis(random_string):
+    result = czech_sort.sorted(random_string)
+    assert type(result) == list
+
+@given(random_string=text())
+def test_key_hypothesis(random_string):
+    # Actually, this is a strict type check
+    key = czech_sort.key(random_string)
+    check_key_element(key)
