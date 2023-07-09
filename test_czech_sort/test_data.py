@@ -53,7 +53,7 @@ def pytest_generate_tests(metafunc):
     if metafunc.function.__name__ == 'test_sorted':
         metafunc.parametrize(
             'l', [list(l) for l in inputs])
-    if metafunc.function.__name__ == 'test_key':
+    if metafunc.function.__name__ in ('test_key', 'test_bytes_key'):
         metafunc.parametrize(
             's', [c for l in inputs for c in l])
 
@@ -69,27 +69,50 @@ def test_key(s):
     """Assert keys are immutable and well ordered"""
     # Actually, this is a strict type check
     key = czech_sort.key(s)
-    check_key_element(key)
+    check_key_type(key)
 
 
-def check_key_element(t):
+def check_key_type(t):
     if type(t) in (str, int, bool):
         return True
     if sys.version_info < (3, 0) and type(t) is unicode:
         return True
     if type(t) is tuple:
         for c in t:
-            check_key_element(c)
+            check_key_type(c)
         return
     raise AssertionError('{0} is a {1}'.format(t, type(t)))
+
+
+def test_bytes_key(s):
+    """Assert keys are immutable and well ordered"""
+    # Actually, this is a strict type check
+    key = czech_sort.bytes_key(s)
+
+
+def check_bytes_key_type(t):
+    if sys.version_info < (3, 0) and type(t) is str:
+        return True
+    if type(t) is bytes:
+        return True
+    raise AssertionError('{0} is a {1}'.format(t, type(t)))
+
 
 @given(random_string=text())
 def test_sorted_hypothesis(random_string):
     result = czech_sort.sorted(random_string)
     assert type(result) == list
 
+
 @given(random_string=text())
 def test_key_hypothesis(random_string):
     # Actually, this is a strict type check
     key = czech_sort.key(random_string)
-    check_key_element(key)
+    check_key_type(key)
+
+
+@given(random_string=text())
+def test_bytes_key_hypothesis(random_string):
+    # Actually, this is a strict type check
+    key = czech_sort.key(random_string)
+    check_bytes_key_type(key)

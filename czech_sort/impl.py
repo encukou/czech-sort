@@ -29,6 +29,10 @@ def sorted(strings):
     return builtins.sorted(strings, key=key)
 
 
+def bytes_key(string):
+    pass
+
+
 nfkd = functools.partial(unicodedata.normalize, 'NFKD')
 HACEK = nfkd('č')[-1]
 
