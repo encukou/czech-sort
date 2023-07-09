@@ -91,7 +91,7 @@ def test_bytes_key(s):
 
 
 def check_bytes_key_type(b):
-    if sys.version_info < (3, 0) and type(t) is str:
+    if sys.version_info < (3, 0) and type(b) is str:
         return True
     if type(b) is bytes:
         return True
