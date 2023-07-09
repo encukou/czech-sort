@@ -12,6 +12,7 @@ from __future__ import unicode_literals
 
 import re
 import functools
+import sys
 import unicodedata
 
 try:
@@ -19,6 +20,9 @@ try:
 except ImportError:
     # Python 2
     import __builtin__ as builtins
+
+str_type = unicode if sys.version_info < (3, 0) else str
+bytes_type = str if sys.version_info < (3, 0) else bytes
 
 
 def sorted(strings):
@@ -46,30 +50,29 @@ def bytes_key(string):
 
 
 def key_to_bytes(multi_level_key):
-    match multi_level_key:
-        case tuple():
-            # Turn individual items into bytes keys, and join them.
-            # After each item, put a `1` byte if there are more items,
-            # and a `0` byte if not.
-            return b'\x01'.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
-        case str():
-            # Encode to UTF-8, add a zero marker at the end.
-            # The marker needs to be "smaller" than anything in the string,
-            # including embedded `0` bytes.
-            # So, the marker is a doubled `0` byte, and any `0` bytes in
-            # the string are "escaped" to `0`-`1`.
-            return multi_level_key.encode().replace(b'\0', b'\0\x01') + b'\0\0'
-        case int():
-            if multi_level_key < 0:
-                # Negative numbers are smallest, start with a `0` byte.
-                return bytes([0]) + multi_level_key.to_bytes(8, signed=True)
-            if multi_level_key >= 254:
-                # Large numbers start with a full byte.
-                return bytes([255]) + multi_level_key.to_bytes(8)
-            # Small non-negative numbers use the remaining byte values.
-            return (multi_level_key + 1).to_bytes(1)
-        case _:
-            raise TypeError(multi_level_key)
+    if isinstance(multi_level_key, tuple):
+        # Turn individual items into bytes keys, and join them.
+        # After each item, put a `1` byte if there are more items,
+        # and a `0` byte if not.
+        return b'\x01'.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
+    elif isinstance(multi_level_key, str_type):
+        # Encode to UTF-8, add a zero marker at the end.
+        # The marker needs to be "smaller" than anything in the string,
+        # including embedded `0` bytes.
+        # So, the marker is a doubled `0` byte, and any `0` bytes in
+        # the string are "escaped" to `0`-`1`.
+        return multi_level_key.encode('utf-8').replace(b'\0', b'\0\x01') + b'\0\0'
+    elif isinstance(multi_level_key, int):
+        if multi_level_key < 0:
+            # Negative numbers are smallest, start with a `0` byte.
+            return bytes_type([0]) + multi_level_key.to_bytes(8, signed=True)
+        if multi_level_key >= 254:
+            # Large numbers start with a full byte.
+            return bytes_type([255]) + multi_level_key.to_bytes(8)
+        # Small non-negative numbers use the remaining byte values.
+        return (multi_level_key + 1).to_bytes(1)
+    else:
+        raise TypeError(multi_level_key)
 
 
 nfkd = functools.partial(unicodedata.normalize, 'NFKD')
