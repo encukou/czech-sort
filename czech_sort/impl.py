@@ -30,7 +30,46 @@ def sorted(strings):
 
 
 def bytes_key(string):
-    pass
+    """Return a Czech sort key for the given string, as bytes
+
+    :param string: string (unicode in Python 2)
+
+    Comparing the sort keys of two strings will give the result according
+    to how the strings would compare in Czech collation order, i.e.
+        ``bytes_key(s1) < bytes_key(s2)``  <=>  ``s1`` comes before ``s2``
+
+    The bytes content of the sort key may change in the future.
+    The only operations guaranteed to work on it are comparisons and equality
+    checks (<, ==, etc.) against other keys.
+    """
+    return key_to_bytes(key(string))
+
+
+def key_to_bytes(multi_level_key):
+    match multi_level_key:
+        case tuple():
+            # Turn individual items into bytes keys, and join them.
+            # After each item, put a `1` byte if there are more items,
+            # and a `0` byte if not.
+            return b'\x01'.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
+        case str():
+            # Encode to UTF-8, add a zero marker at the end.
+            # The marker needs to be "smaller" than anything in the string,
+            # including embedded `0` bytes.
+            # So, the marker is a doubled `0` byte, and any `0` bytes in
+            # the string are "escaped" to `0`-`1`.
+            return multi_level_key.encode().replace(b'\0', b'\0\x01') + b'\0\0'
+        case int():
+            if multi_level_key < 0:
+                # Negative numbers are smallest, start with a `0` byte.
+                return bytes([0]) + multi_level_key.to_bytes(8, signed=True)
+            if multi_level_key >= 254:
+                # Large numbers start with a full byte.
+                return bytes([255]) + multi_level_key.to_bytes(8)
+            # Small non-negative numbers use the remaining byte values.
+            return (multi_level_key + 1).to_bytes(1)
+        case _:
+            raise TypeError(multi_level_key)
 
 
 nfkd = functools.partial(unicodedata.normalize, 'NFKD')
