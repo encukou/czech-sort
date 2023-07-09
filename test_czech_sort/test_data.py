@@ -90,12 +90,12 @@ def test_bytes_key(s):
     key = czech_sort.bytes_key(s)
 
 
-def check_bytes_key_type(t):
+def check_bytes_key_type(b):
     if sys.version_info < (3, 0) and type(t) is str:
         return True
-    if type(t) is bytes:
+    if type(b) is bytes:
         return True
-    raise AssertionError('{0} is a {1}'.format(t, type(t)))
+    raise AssertionError('{0} is a {1}'.format(b, type(b)))
 
 
 @given(random_string=text())
@@ -114,5 +114,5 @@ def test_key_hypothesis(random_string):
 @given(random_string=text())
 def test_bytes_key_hypothesis(random_string):
     # Actually, this is a strict type check
-    key = czech_sort.key(random_string)
+    key = czech_sort.bytes_key(random_string)
     check_bytes_key_type(key)
