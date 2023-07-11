@@ -3,3 +3,4 @@ __pycache__/
 /.tox/
 /czech_sort.egg-info/
 .hypothesis
+/dist/
