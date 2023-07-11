@@ -57,12 +57,16 @@ def key_to_bytes(multi_level_key):
     elif isinstance(multi_level_key, int):
         if multi_level_key < 0:
             # Negative numbers are smallest, start with a `0` byte.
-            return bytes_type([0]) + multi_level_key.to_bytes(8, signed=True)
+            return bytes([0]) + multi_level_key.to_bytes(
+                8, byteorder='big', signed=True,
+            )
         if multi_level_key >= 254:
             # Large numbers start with a full byte.
-            return bytes_type([255]) + multi_level_key.to_bytes(8)
+            return bytes([255]) + multi_level_key.to_bytes(
+                8, byteorder='big',
+            )
         # Small non-negative numbers use the remaining byte values.
-        return (multi_level_key + 1).to_bytes(1)
+        return (multi_level_key + 1).to_bytes(1, byteorder='big')
     else:
         raise TypeError(multi_level_key)
 
