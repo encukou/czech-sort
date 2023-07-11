@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 (2023-07-11)
+
+- Add `bytes_key`
+  (Thanks to @honzajavorek!)
+- Drop support for Python 2
+
 ## 1.0.1 (2021-08-30)
 
 - Fix bug that prevented sorting strings that contain 'Ł' and/or 'Ø'.

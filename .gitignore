@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 /.tox/
 /czech_sort.egg-info/
+.hypothesis
+/dist/

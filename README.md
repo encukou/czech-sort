@@ -75,6 +75,16 @@ Full API
  This function is suitable as the `key` for functions like the built-in
  `sorted` or `list.sort`.
 
+### `czech_sort.bytes_key(s)`
+
+ Returns a sort key for a given string, as bytes.
+
+ This is suitable as a DB-API custom function like the built-in
+ `sqlite3` connection's `create_function`.
+
+ WARNING: Do not store the results of this function. The format can change
+ in future versions of `czech_sort`.
+
 
 Compatibility
 -------------
