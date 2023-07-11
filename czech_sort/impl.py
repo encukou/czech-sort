@@ -8,8 +8,6 @@ Future versions of this library may change the sort order, as more details
 and exotic characters are added.
 """
 
-from __future__ import unicode_literals
-
 import re
 import functools
 import sys
