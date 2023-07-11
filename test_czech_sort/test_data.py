@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import sys
 
 from hypothesis import given
-from hypothesis.strategies import text
+from hypothesis.strategies import text, lists
 
 import czech_sort
 
@@ -83,15 +83,9 @@ def check_key_type(t):
 
 
 def test_bytes_key(s):
-    """Assert keys are immutable and well ordered"""
-    # Actually, this is a strict type check
+    """Assert bytes keys are bytes"""
     key = czech_sort.bytes_key(s)
-
-
-def check_bytes_key_type(b):
-    if type(b) is bytes:
-        return True
-    raise AssertionError('{0} is a {1}'.format(b, type(b)))
+    assert isinstance(key, bytes)
 
 
 @given(random_string=text())
@@ -111,4 +105,11 @@ def test_key_hypothesis(random_string):
 def test_bytes_key_hypothesis(random_string):
     # Actually, this is a strict type check
     key = czech_sort.bytes_key(random_string)
-    check_bytes_key_type(key)
+    assert isinstance(key, bytes)
+
+
+@given(strings=lists(text()))
+def test_bytes_key_matches_key_hypothesis(strings):
+    by_key = sorted(strings, key=czech_sort.key)
+    by_bytes_key = sorted(strings, key=czech_sort.bytes_key)
+    assert by_key == by_bytes_key
