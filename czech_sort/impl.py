@@ -15,14 +15,7 @@ import functools
 import sys
 import unicodedata
 
-try:
-    import builtins
-except ImportError:
-    # Python 2
-    import __builtin__ as builtins
-
-str_type = unicode if sys.version_info < (3, 0) else str
-bytes_type = str if sys.version_info < (3, 0) else bytes
+import builtins
 
 
 def sorted(strings):
@@ -55,7 +48,7 @@ def key_to_bytes(multi_level_key):
         # After each item, put a `1` byte if there are more items,
         # and a `0` byte if not.
         return b'\x01'.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
-    elif isinstance(multi_level_key, str_type):
+    elif isinstance(multi_level_key, str):
         # Encode to UTF-8, add a zero marker at the end.
         # The marker needs to be "smaller" than anything in the string,
         # including embedded `0` bytes.

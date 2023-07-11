@@ -75,8 +75,6 @@ def test_key(s):
 def check_key_type(t):
     if type(t) in (str, int, bool):
         return True
-    if sys.version_info < (3, 0) and type(t) is unicode:
-        return True
     if type(t) is tuple:
         for c in t:
             check_key_type(c)
@@ -91,8 +89,6 @@ def test_bytes_key(s):
 
 
 def check_bytes_key_type(b):
-    if sys.version_info < (3, 0) and type(b) is str:
-        return True
     if type(b) is bytes:
         return True
     raise AssertionError('{0} is a {1}'.format(b, type(b)))
