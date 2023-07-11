@@ -45,9 +45,8 @@ def bytes_key(string):
 def key_to_bytes(multi_level_key):
     if isinstance(multi_level_key, tuple):
         # Turn individual items into bytes keys, and join them.
-        # After each item, put a `1` byte if there are more items,
-        # and a `0` byte if not.
-        return b'\x01'.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
+        # After each tuple, put a `0` byte.
+        return b''.join(key_to_bytes(e) for e in multi_level_key) + b'\0'
     elif isinstance(multi_level_key, str):
         # Encode to UTF-8, add a zero marker at the end.
         # The marker needs to be "smaller" than anything in the string,
