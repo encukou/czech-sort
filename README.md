@@ -82,14 +82,8 @@ Full API
  This is suitable as a DB-API custom function like the built-in
  `sqlite3` connection's `create_function`.
 
- WARNING: Do not store the results of this function. The format can change
+ **WARNING:** Do not store the results of this function. The format can change
  in future versions of `czech_sort`.
-
-
-Compatibility
--------------
-
-The czech-sort library can be used with Python 3.5+.
 
 
 Installation
