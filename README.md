@@ -86,14 +86,6 @@ Full API
  in future versions of `czech_sort`.
 
 
-Compatibility
--------------
-
-The czech-sort library can be used with Python 2.6+ and 3.5+.
-
-Under Python 2, it only accepts `unicode` strings.
-
-
 Installation
 ------------
 
